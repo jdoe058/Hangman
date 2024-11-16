@@ -1,14 +1,17 @@
+import java.util.Scanner;
 
 public class Game {
+    public static final String LOSE_MESSAGE = "Вы проиграли! ";
+    public static final String WIN_MESSAGE = "Вы выиграли! ";
     final Field field = new Field();
     final Render render;
     final InputDialog dialog;
     final SecretWord secretWord;
 
-    public Game(SecretWord secretWord) {
+    public Game(Scanner scanner, SecretWord secretWord) {
         this.secretWord = secretWord;
         render = new Render(field, secretWord);
-        dialog = new InputDialog(render);
+        dialog = new InputDialog(scanner, render);
     }
 
     void run() {
@@ -24,13 +27,22 @@ public class Game {
             );
         }
         render.setFooter(field.isHanged()
-                ? "Вы проиграли, загадано слово %s, отгадано букв %d".formatted(secretWord.word, secretWord.guessedLetters.size())
-                : "Вы выиграли, совершено промахов %d".formatted(field.wrongLetters.size()));
+                ? LOSE_MESSAGE + secretWord.getEndGameMessage()
+                : WIN_MESSAGE + field.getEndGameMessage());
         render.render();
     }
 
+    //TODO логика элементарная, не вижу смысла выносить в отдельный класс
     public static void main(String[] args) {
-        Game game = new Game(new SecretWord("работа"));
-        game.run();
+        Dictionary dictionary = new Dictionary();
+        Scanner scanner = new Scanner(System.in);
+        String line;
+        do {
+            Game game = new Game(scanner, new SecretWord(dictionary.getRandomWord()));
+            game.run();
+            System.out.println("Сыграть еще раз? Да/Yes");
+            line = scanner.next();
+        } while (line.equalsIgnoreCase("да") || line.equalsIgnoreCase("yes"));
     }
 }
+

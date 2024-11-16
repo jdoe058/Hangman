@@ -5,7 +5,7 @@ import java.util.stream.Collectors;
 public class SecretWord {
     private static final int MASK = '_';
     private static final CharSequence DELIMITER = " ";
-    final public String word;
+    final private String word;
     final public Set<Integer> guessedLetters = new HashSet<>();
 
     public SecretWord(String word) {
@@ -29,5 +29,10 @@ public class SecretWord {
 
     boolean isSolved() {
         return word.chars().allMatch(guessedLetters::contains);
+    }
+
+    //TODO разобраться с наименованием и вынести константу
+    public String getEndGameMessage() {
+        return "загадано слово %s, отгадано букв %d".formatted(word, guessedLetters.size());
     }
 }

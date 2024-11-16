@@ -20,12 +20,10 @@ public class Render {
         String[] strings = new String[5];
         strings[0] = "  +--+";
         strings[4] = "+====+";
-
-        strings[1] = GallowsSprites.getTopPart(field)
-                + "Слово: " + secretWord.getMaskedWord();
-        strings[2] = GallowsSprites.getMiddlePart(field)
-                + "Промахи (%d): %s".formatted(field.wrongLetters.size(), field.wrongLetters);
+        strings[1] = GallowsSprites.getTopPart(field) + "Слово: " + secretWord.getMaskedWord();
+        strings[2] = GallowsSprites.getMiddlePart(field) + field.getTurnGameMessage();
         strings[3] = GallowsSprites.getBottomPart(field) + footer;
+
         System.out.println(String.join("\n", strings));
     }
 }

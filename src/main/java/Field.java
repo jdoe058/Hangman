@@ -1,9 +1,9 @@
 import java.util.*;
 
 public class Field {
-    final public Set<GallowsSprites> gallows = new HashSet<>();
-    Queue<GallowsSprites> hangman = new ArrayDeque<>(List.of(GallowsSprites.values()));
-    final public Set<Character> wrongLetters = new HashSet<>();
+    final private Set<GallowsSprites> gallows = new HashSet<>();
+    final private Queue<GallowsSprites> hangman = new ArrayDeque<>(List.of(GallowsSprites.values()));
+    final private Set<Character> wrongLetters = new HashSet<>();
 
     public boolean isHanged() {
         return hangman.isEmpty();
@@ -20,5 +20,15 @@ public class Field {
 
     public boolean contains(GallowsSprites hangman) {
         return gallows.contains(hangman);
+    }
+
+    //TODO разобраться с наименованием и вынести константу
+    public String getTurnGameMessage() {
+        return "Промахи (%d): %s".formatted(wrongLetters.size(), wrongLetters);
+    }
+
+    //TODO разобраться с наименованием и вынести константу
+    public String getEndGameMessage() {
+        return "Cовершено промахов %d".formatted(wrongLetters.size());
     }
 }
