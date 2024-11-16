@@ -8,8 +8,8 @@ public enum Hangman {
     LEFT_SOLE("_", " "),
     RIGHT_SOLE("_|", " |");
 
-    final public String present;
-    final public String empty;
+    final private String present;
+    final private String empty;
 
     Hangman(String present, String empty) {
         this.present = present;
