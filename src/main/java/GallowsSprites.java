@@ -1,12 +1,16 @@
 public enum GallowsSprites {
-    HEAD("  o  |\t", "     |\t"),
+
+    BASE("+====+", "      \t"),
+    PILLAR("|\t", " \t"),
+    BEAM("  +--+", "      \t"),
+    HEAD("  o  ", "     "),
     TORSO("|", " "),
     LEFT_HAND(" /", "  "),
-    RIGHT_HAND("\\ |\t", "  |\t"),
+    RIGHT_HAND("\\ ", "  "),
     LEFT_FOOT("/ ", "  "),
     RIGHT_FOOT("\\", " "),
     LEFT_SOLE("_", " "),
-    RIGHT_SOLE("_|\t", " |\t");
+    RIGHT_SOLE("_", " ");
 
     final private String present;
     final private String empty;
@@ -20,16 +24,25 @@ public enum GallowsSprites {
         return field.contains(this) ? present : empty;
     }
 
+    static public String getFirstSprite(Field field) {
+        return BEAM.getSprite(field);
+    }
+
     static public String getTopPart(Field field) {
-        return HEAD.getSprite(field);
+        return HEAD.getSprite(field) + PILLAR.getSprite(field);
     }
 
     static public String getMiddlePart(Field field) {
-        return LEFT_HAND.getSprite(field) + TORSO.getSprite(field) + RIGHT_HAND.getSprite(field);
+        return LEFT_HAND.getSprite(field) + TORSO.getSprite(field)
+                + RIGHT_HAND.getSprite(field) + PILLAR.getSprite(field);
     }
 
     static public String getBottomPart(Field field) {
         return LEFT_SOLE.getSprite(field) + LEFT_FOOT.getSprite(field)
-                + RIGHT_FOOT.getSprite(field) + RIGHT_SOLE.getSprite(field);
+                + RIGHT_FOOT.getSprite(field) + RIGHT_SOLE.getSprite(field) + PILLAR.getSprite(field);
+    }
+
+    static public String getFiveSprite(Field field) {
+        return BASE.getSprite(field);
     }
 }
