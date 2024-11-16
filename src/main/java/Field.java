@@ -1,24 +1,24 @@
 import java.util.*;
 
 public class Field {
-    final public Set<Hangman> gallows = new HashSet<>();
-    Queue<Hangman> hangedMan = new ArrayDeque<>(List.of(Hangman.values()));
-    Set<Character> wrongLetters = new HashSet<>();
+    final public Set<GallowsSprites> gallows = new HashSet<>();
+    Queue<GallowsSprites> hangman = new ArrayDeque<>(List.of(GallowsSprites.values()));
+    final public Set<Character> wrongLetters = new HashSet<>();
 
     public boolean isHanged() {
-        return hangedMan.isEmpty();
+        return hangman.isEmpty();
     }
 
-    public void hang() {
-        gallows.add(hangedMan.poll());
+    public void nextStepHanging() {
+        gallows.add(hangman.poll());
     }
 
-    public void hang (char letter) {
+    public void nextStepHanging(char letter) {
         wrongLetters.add(letter);
-        hang();
+        nextStepHanging();
     }
 
-    public boolean contains(Hangman hangman) {
+    public boolean contains(GallowsSprites hangman) {
         return gallows.contains(hangman);
     }
 }

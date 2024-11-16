@@ -11,7 +11,7 @@ public class InputDialog {
 
     public Optional<Character> getLetter() {
         String line = scanner.nextLine().trim().toUpperCase();
-        render.setFooter(" Ввод: " + line);
+        render.setFooter("Ввод: " + line);
         return line.matches("^[А-ЯЁ]$")
                 ? Optional.of(line.charAt(0))
                 : Optional.empty();

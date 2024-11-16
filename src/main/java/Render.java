@@ -1,9 +1,11 @@
 public class Render {
     final Field field;
+    final SecretWord secretWord;
     private String footer = "";
 
-    public Render(Field field) {
+    public Render(Field field, SecretWord secretWord) {
         this.field = field;
+        this.secretWord = secretWord;
     }
 
     void clearFooter() {
@@ -19,11 +21,11 @@ public class Render {
         strings[0] = "  +--+";
         strings[4] = "+====+";
 
-        strings[1] = Hangman.getTopPart(field)
-                + " Слово: ";
-        strings[2] = Hangman.getMiddlePart(field)
-                + " Неправильные буквы (%d): %s".formatted(field.wrongLetters.size(), field.wrongLetters);
-        strings[3] = Hangman.getBottomPart(field) + footer;
+        strings[1] = GallowsSprites.getTopPart(field)
+                + "Слово: " + secretWord.getMaskedWord();
+        strings[2] = GallowsSprites.getMiddlePart(field)
+                + "Промахи (%d): %s".formatted(field.wrongLetters.size(), field.wrongLetters);
+        strings[3] = GallowsSprites.getBottomPart(field) + footer;
         System.out.println(String.join("\n", strings));
     }
 }
