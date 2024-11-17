@@ -2,20 +2,16 @@
 import java.util.*;
 
 public class Game {
-    public static final String LOSE_MESSAGE = "Вы проиграли!";
-    public static final String WIN_MESSAGE = "Вы выиграли!";
-    public static final String GIVING = "Попадания: ";
-    public static final String INPUT = "Ввод: ";
-    public static final String WORD = "Слово: ";
-    public static final String MISS = "Промахи: ";
-
     final Gallows gallows;
     final Render render;
     final InputDialog dialog;
     final SecretWord secretWord;
-    final String title = "\tИгра Виселица";
+    final MessageCenter mc;
+    final String title;
 
-    public Game(Scanner scanner, SecretWord secretWord) {
+    public Game(Scanner scanner, String title, SecretWord secretWord, MessageCenter mc) {
+        this.mc = mc;
+        this.title = title;
         this.secretWord = secretWord;
         gallows = new Gallows();
         render = new Render(gallows);
@@ -33,7 +29,8 @@ public class Game {
 
     public void run() {
         while (!gallows.isHanged() && !secretWord.isSolved()) {
-            render.render(blog(secretWord.getMaskedWord(), INPUT + dialog.getLastInput()));
+            render.render(blog(secretWord.getMaskedWord(),
+                    mc.get(MessagesRU.INPUT) + dialog.getLastInput()));
             dialog.getLetter().ifPresentOrElse(
                     x -> {
                         if (!secretWord.check(x)) {
@@ -42,15 +39,16 @@ public class Game {
                     }, gallows::nextStepHanging
             );
         }
-        render.render(blog(secretWord.getWord(), gallows.isHanged() ? LOSE_MESSAGE : WIN_MESSAGE));
+        render.render(blog(secretWord.getWord(), mc.get(gallows.isHanged()
+                ? MessagesRU.LOSE : MessagesRU.WIN)));
     }
 
     private Queue<String> blog(String word, String footer) {
         Queue<String> result = new ArrayDeque<>();
         result.add(title);
-        result.add(WORD + word);
-        result.add(MISS + gallows.getLetters());
-        result.add(GIVING + secretWord.getLetters());
+        result.add(mc.get(MessagesRU.WORD) + word);
+        result.add(mc.get(MessagesRU.MISS) + gallows.getLetters());
+        result.add(mc.get(MessagesRU.HITS) + secretWord.getLetters());
         result.add(footer);
         return result;
     }
