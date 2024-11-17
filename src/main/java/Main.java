@@ -17,12 +17,14 @@ public class Main {
             scanner.nextLine();
             SecretWord secretWord = new SecretWord(dictionary.getRandomWord());
             Game game = new Game(scanner, secretWord);
+            game.init();
             game.run();
         });
         menu.add("Сыграть на тяжелой сложности", () -> {
             scanner.nextLine();
             SecretWord secretWord = new SecretWord(dictionary.getRandomWord());
             Game game = new Game(scanner, secretWord);
+            game.init(3, 2);
             game.run();
         });
 

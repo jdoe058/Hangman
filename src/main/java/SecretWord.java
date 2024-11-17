@@ -1,4 +1,5 @@
 import java.util.HashSet;
+import java.util.Random;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -39,5 +40,10 @@ public class SecretWord {
 
     public boolean isSolved() {
         return word.chars().allMatch(x -> guessedLetters.contains((char)x));
+    }
+
+    public void openRandomLetter() {
+        Random random = new Random();
+        guessedLetters.add(word.charAt(random.nextInt(word.length())));
     }
 }

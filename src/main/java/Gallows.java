@@ -2,8 +2,25 @@ import java.util.*;
 
 public class Gallows {
     final private Set<GallowsSprites> gallows = new HashSet<>();
-    final private Queue<GallowsSprites> hangman = new ArrayDeque<>(List.of(GallowsSprites.values()));
+    final private Deque<GallowsSprites> hangman = new ArrayDeque<>();
     final private Set<Character> wrongLetters = new HashSet<>();
+
+    public void init() {
+        hangman.addAll(List.of(GallowsSprites.values()));
+    }
+
+    //TODO по нормальному назвать параметры
+    public void init(int start, int last) {
+        init();
+
+        for (int i = 0; i < start; i++) {
+            nextStepHanging();
+        }
+
+        for (int i = 0; i < last; i++) {
+            hangman.pollLast();
+        }
+    }
 
     public boolean isHanged() {
         return hangman.isEmpty();

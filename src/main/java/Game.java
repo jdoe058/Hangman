@@ -22,6 +22,15 @@ public class Game {
         dialog = new InputDialog(scanner);
     }
 
+    public void init() {
+        gallows.init();
+        secretWord.openRandomLetter();
+    }
+
+    public void init(int start, int last) {
+        gallows.init(start, last);
+    }
+
     public void run() {
         while (!gallows.isHanged() && !secretWord.isSolved()) {
             render.render(blog(secretWord.getMaskedWord(), INPUT + dialog.getLastInput()));
