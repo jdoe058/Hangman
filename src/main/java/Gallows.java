@@ -1,6 +1,6 @@
 import java.util.*;
 
-public class Field {
+public class Gallows {
     final private Set<GallowsSprites> gallows = new HashSet<>();
     final private Queue<GallowsSprites> hangman = new ArrayDeque<>(List.of(GallowsSprites.values()));
     final private Set<Character> wrongLetters = new HashSet<>();

@@ -3,10 +3,15 @@ import java.util.Scanner;
 
 public class InputDialog {
     final private Scanner scanner;
-    public String lastInput;
+
+    private String lastInput = "";
 
     public InputDialog(Scanner scanner) {
         this.scanner = scanner;
+    }
+
+    public String getLastInput() {
+        return lastInput;
     }
 
     public Optional<Character> getLetter() {

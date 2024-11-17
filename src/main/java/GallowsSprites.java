@@ -20,29 +20,29 @@ public enum GallowsSprites {
         this.empty = empty;
     }
 
-    private String getSprite(Field field) {
-        return field.contains(this) ? present : empty;
+    private String getSprite(Gallows gallows) {
+        return gallows.contains(this) ? present : empty;
     }
 
-    static public String getFirstSprite(Field field) {
-        return BEAM.getSprite(field);
+    static public String getFirstSprite(Gallows gallows) {
+        return BEAM.getSprite(gallows);
     }
 
-    static public String getTwoSprite(Field field) {
-        return HEAD.getSprite(field) + PILLAR.getSprite(field);
+    static public String getTwoSprite(Gallows gallows) {
+        return HEAD.getSprite(gallows) + PILLAR.getSprite(gallows);
     }
 
-    static public String getThreeSprite(Field field) {
-        return LEFT_HAND.getSprite(field) + TORSO.getSprite(field)
-                + RIGHT_HAND.getSprite(field) + PILLAR.getSprite(field);
+    static public String getThreeSprite(Gallows gallows) {
+        return LEFT_HAND.getSprite(gallows) + TORSO.getSprite(gallows)
+                + RIGHT_HAND.getSprite(gallows) + PILLAR.getSprite(gallows);
     }
 
-    static public String getFourSprite(Field field) {
-        return LEFT_SOLE.getSprite(field) + LEFT_FOOT.getSprite(field)
-                + RIGHT_FOOT.getSprite(field) + RIGHT_SOLE.getSprite(field) + PILLAR.getSprite(field);
+    static public String getFourSprite(Gallows gallows) {
+        return LEFT_SOLE.getSprite(gallows) + LEFT_FOOT.getSprite(gallows)
+                + RIGHT_FOOT.getSprite(gallows) + RIGHT_SOLE.getSprite(gallows) + PILLAR.getSprite(gallows);
     }
 
-    static public String getFiveSprite(Field field) {
-        return BASE.getSprite(field);
+    static public String getFiveSprite(Gallows gallows) {
+        return BASE.getSprite(gallows);
     }
 }
