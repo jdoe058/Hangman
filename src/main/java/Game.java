@@ -13,6 +13,7 @@ public class Game {
     final Render render;
     final InputDialog dialog;
     final SecretWord secretWord;
+    final String title = "\tИгра Виселица";
 
     public Game(Scanner scanner, SecretWord secretWord) {
         this.secretWord = secretWord;
@@ -20,14 +21,9 @@ public class Game {
         dialog = new InputDialog(scanner);
     }
 
-    void run() {
-        Queue<String> blog = new ArrayDeque<>();
+    public void run() {
         while (!gallows.isHanged() && !secretWord.isSolved()) {
-            blog.add(WORD + secretWord.getMaskedWord());
-            blog.add(MISS + gallows.getLetters());
-            blog.add(GIVING + secretWord.getLetters());
-            blog.add(INPUT + dialog.getLastInput());
-            render.render(blog);
+            render.render(blog(secretWord.getMaskedWord(), INPUT + dialog.getLastInput()));
             dialog.getLetter().ifPresentOrElse(
                     x -> {
                         if (!secretWord.check(x)) {
@@ -36,11 +32,17 @@ public class Game {
                     }, gallows::nextStepHanging
             );
         }
-        blog.add(WORD + secretWord.getWord());
-        blog.add(MISS + gallows.getLetters());
-        blog.add(GIVING + secretWord.getLetters());
-        blog.add(gallows.isHanged() ? LOSE_MESSAGE : WIN_MESSAGE);
-        render.render(blog);
+        render.render(blog(secretWord.getWord(), gallows.isHanged() ? LOSE_MESSAGE : WIN_MESSAGE));
+    }
+
+    private Queue<String> blog(String word, String footer) {
+        Queue<String> result = new ArrayDeque<>();
+        result.add(title);
+        result.add(WORD + word);
+        result.add(MISS + gallows.getLetters());
+        result.add(GIVING + secretWord.getLetters());
+        result.add(footer);
+        return result;
     }
 
     //TODO логика элементарная, не вижу смысла выносить в отдельный класс

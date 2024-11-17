@@ -10,11 +10,9 @@ public class Render {
 
     void render(Queue<String> blog) {
         ArrayList<String> list = new ArrayList<>();
-        list.add(GallowsSprites.getFirstSprite(gallows));
-        list.add( GallowsSprites.getTwoSprite(gallows) + blog.poll());
-        list.add(GallowsSprites.getThreeSprite(gallows) + blog.poll());
-        list.add(GallowsSprites.getFourSprite(gallows) + blog.poll());
-        list.add(GallowsSprites.getFiveSprite(gallows) + blog.poll());
+        for (var s : GallowsSprites.rowSprites) {
+            list.add(s.getSprite(gallows) + blog.poll());
+        }
         blog.clear();
         System.out.println(String.join("\n", list));
     }

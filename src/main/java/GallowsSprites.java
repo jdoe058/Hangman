@@ -1,5 +1,7 @@
-public enum GallowsSprites {
+import java.util.ArrayList;
+import java.util.List;
 
+public enum GallowsSprites {
     BASE("+====+\t", "      \t"),
     PILLAR("|\t", " \t"),
     BEAM("  +--+", "      \t"),
@@ -20,29 +22,33 @@ public enum GallowsSprites {
         this.empty = empty;
     }
 
-    private String getSprite(Gallows gallows) {
-        return gallows.contains(this) ? present : empty;
+    public interface Sprites {
+        String getSprite(Gallows g);
     }
 
-    static public String getFirstSprite(Gallows gallows) {
-        return BEAM.getSprite(gallows);
-    }
+    public static final List<Sprites> rowSprites = new ArrayList<>(List.of(
+            BEAM::getSprite,
+            GallowsSprites::getRowWithHeadSprites,
+            GallowsSprites::getRowWithHandAndTorsoSprites,
+            GallowsSprites::getRowWithFootAndSoleSprites,
+            BASE::getSprite
+    ));
 
-    static public String getTwoSprite(Gallows gallows) {
+    static private String getRowWithHeadSprites(Gallows gallows) {
         return HEAD.getSprite(gallows) + PILLAR.getSprite(gallows);
     }
 
-    static public String getThreeSprite(Gallows gallows) {
+    static private String getRowWithHandAndTorsoSprites(Gallows gallows) {
         return LEFT_HAND.getSprite(gallows) + TORSO.getSprite(gallows)
                 + RIGHT_HAND.getSprite(gallows) + PILLAR.getSprite(gallows);
     }
 
-    static public String getFourSprite(Gallows gallows) {
+    static private String getRowWithFootAndSoleSprites(Gallows gallows) {
         return LEFT_SOLE.getSprite(gallows) + LEFT_FOOT.getSprite(gallows)
                 + RIGHT_FOOT.getSprite(gallows) + RIGHT_SOLE.getSprite(gallows) + PILLAR.getSprite(gallows);
     }
 
-    static public String getFiveSprite(Gallows gallows) {
-        return BASE.getSprite(gallows);
+    private String getSprite(Gallows gallows) {
+        return gallows.contains(this) ? present : empty;
     }
 }
