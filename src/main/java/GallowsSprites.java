@@ -1,6 +1,6 @@
 public enum GallowsSprites {
 
-    BASE("+====+", "      \t"),
+    BASE("+====+\t", "      \t"),
     PILLAR("|\t", " \t"),
     BEAM("  +--+", "      \t"),
     HEAD("  o  ", "     "),
@@ -28,16 +28,16 @@ public enum GallowsSprites {
         return BEAM.getSprite(field);
     }
 
-    static public String getTopPart(Field field) {
+    static public String getTwoSprite(Field field) {
         return HEAD.getSprite(field) + PILLAR.getSprite(field);
     }
 
-    static public String getMiddlePart(Field field) {
+    static public String getThreeSprite(Field field) {
         return LEFT_HAND.getSprite(field) + TORSO.getSprite(field)
                 + RIGHT_HAND.getSprite(field) + PILLAR.getSprite(field);
     }
 
-    static public String getBottomPart(Field field) {
+    static public String getFourSprite(Field field) {
         return LEFT_SOLE.getSprite(field) + LEFT_FOOT.getSprite(field)
                 + RIGHT_FOOT.getSprite(field) + RIGHT_SOLE.getSprite(field) + PILLAR.getSprite(field);
     }

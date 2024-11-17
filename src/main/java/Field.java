@@ -22,13 +22,7 @@ public class Field {
         return gallows.contains(hangman);
     }
 
-    //TODO разобраться с наименованием и вынести константу
-    public String getTurnGameMessage() {
-        return "Промахи (%d): %s".formatted(wrongLetters.size(), wrongLetters);
-    }
-
-    //TODO разобраться с наименованием и вынести константу
-    public String getEndGameMessage() {
-        return "Cовершено промахов %d".formatted(wrongLetters.size());
+    public String getLetters() {
+        return "(%d) %s".formatted(wrongLetters.size(), wrongLetters);
     }
 }

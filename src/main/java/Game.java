@@ -1,8 +1,9 @@
-import java.util.Scanner;
+
+import java.util.*;
 
 public class Game {
-    public static final String LOSE_MESSAGE = "Вы проиграли! ";
-    public static final String WIN_MESSAGE = "Вы выиграли! ";
+    public static final String LOSE_MESSAGE = "Вы проиграли!";
+    public static final String WIN_MESSAGE = "Вы выиграли!";
     final Field field = new Field();
     final Render render;
     final InputDialog dialog;
@@ -10,14 +11,18 @@ public class Game {
 
     public Game(Scanner scanner, SecretWord secretWord) {
         this.secretWord = secretWord;
-        render = new Render(field, secretWord);
-        dialog = new InputDialog(scanner, render);
+        render = new Render(field);
+        dialog = new InputDialog(scanner);
     }
 
     void run() {
+        Queue<String> blog = new ArrayDeque<>();
         while (!field.isHanged() && !secretWord.isSolved()) {
-            render.render();
-            render.clearFooter();
+            blog.add("Слово: " + secretWord.getMaskedWord());
+            blog.add("Промахи: " + field.getLetters());
+            blog.add("Попадания: " + secretWord.getLetters());
+            blog.add("Ввод: " + dialog.lastInput);
+            render.render(blog);
             dialog.getLetter().ifPresentOrElse(
                     x -> {
                         if (!secretWord.check(x)) {
@@ -26,10 +31,11 @@ public class Game {
                     }, field::nextStepHanging
             );
         }
-        render.setFooter(field.isHanged()
-                ? LOSE_MESSAGE + secretWord.getEndGameMessage()
-                : WIN_MESSAGE + field.getEndGameMessage());
-        render.render();
+        blog.add("Слово: " + secretWord.getWord());
+        blog.add("Промахи: " + field.getLetters());
+        blog.add("Попадания: " + secretWord.getLetters());
+        blog.add(field.isHanged() ? LOSE_MESSAGE : WIN_MESSAGE);
+        render.render(blog);
     }
 
     //TODO логика элементарная, не вижу смысла выносить в отдельный класс
@@ -45,4 +51,3 @@ public class Game {
         } while (line.equalsIgnoreCase("да") || line.equalsIgnoreCase("yes"));
     }
 }
-
