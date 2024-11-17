@@ -9,7 +9,7 @@ public class Game {
     public static final String WORD = "Слово: ";
     public static final String MISS = "Промахи: ";
 
-    final Gallows gallows = new Gallows();
+    final Gallows gallows;
     final Render render;
     final InputDialog dialog;
     final SecretWord secretWord;
@@ -17,6 +17,7 @@ public class Game {
 
     public Game(Scanner scanner, SecretWord secretWord) {
         this.secretWord = secretWord;
+        gallows = new Gallows();
         render = new Render(gallows);
         dialog = new InputDialog(scanner);
     }
@@ -43,18 +44,5 @@ public class Game {
         result.add(GIVING + secretWord.getLetters());
         result.add(footer);
         return result;
-    }
-
-    //TODO логика элементарная, не вижу смысла выносить в отдельный класс
-    public static void main(String[] args) {
-        Dictionary dictionary = new Dictionary();
-        Scanner scanner = new Scanner(System.in);
-        String line;
-        do {
-            Game game = new Game(scanner, new SecretWord(dictionary.getRandomWord()));
-            game.run();
-            System.out.println("Сыграть еще раз? Да/Yes");
-            line = scanner.next();
-        } while (line.equalsIgnoreCase("да") || line.equalsIgnoreCase("yes"));
     }
 }
