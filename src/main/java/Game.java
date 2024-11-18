@@ -18,13 +18,12 @@ public class Game {
         dialog = new InputDialog(scanner);
     }
 
-    public void init() {
-        gallows.init();
-        secretWord.openRandomLetter();
-    }
-
-    public void init(int start, int last) {
-        gallows.init(start, last);
+    public void init(int startOpenLetters, int startHangingsCount, int ignoreLastSprites) {
+        gallows.init(startHangingsCount, ignoreLastSprites);
+        while (startOpenLetters > 0) {
+            startOpenLetters--;
+            secretWord.openRandomLetter();
+        }
     }
 
     public void run() {

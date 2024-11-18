@@ -6,7 +6,9 @@ public enum Lang {
     },
     EN {
         public String get(MessagesRU message) {
-            return MessagesEN.valueOf(message.name()).get();
+            return MessagesEN.valueOf(
+                    message.name())
+                    .get();
         }
     };
     abstract public String get(MessagesRU message);

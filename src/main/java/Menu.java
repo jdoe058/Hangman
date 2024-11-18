@@ -7,26 +7,26 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Menu {
-    private final static int BACK_ID = 0;
     private final static int START_ID = 1;
 
-
-    private final String title;
-    private final String selectMessage;
-    private final String failMessage;
     private final Scanner scanner;
+    private final MessageCenter mc;
 
+    private String title;
     private int id = START_ID;
     private final List<Item> items = new ArrayList<>();
 
-    public Menu(Scanner scanner, String title, String selectMessage, String failMessage) {
+    public Menu(Scanner scanner, MessageCenter mc, String title) {
         this.scanner = scanner;
+        this.mc = mc;
         this.title = title;
-        this.selectMessage = selectMessage;
-        this.failMessage = failMessage;
     }
 
-    public void add(String text, Action action) {
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void add(MessagesRU text, Action action) {
         Item item = new Item(id++, text, action);
         items.add(item);
     }
@@ -36,7 +36,7 @@ public class Menu {
         System.out.println(title);
         System.out.println(border);
         for (Item item : items) {
-            System.out.printf("%d. %s \n", item.id, item.text);
+            System.out.printf("%d. %s \n", item.id, mc.get(item.text));
         }
         System.out.println(border);
     }
@@ -44,20 +44,17 @@ public class Menu {
     public void select() {
 
         while (true) {
-            System.out.println(selectMessage);
+            System.out.println(mc.get(MessagesRU.MENU_SELECT));
             String key = scanner.next();
             if (isInteger(key)) {
                 int num = Integer.parseInt(key);
-                if (num == BACK_ID) {
-                    return;
-                }
                 if (num >= START_ID && num < id) {
                     Item item = items.get(num - START_ID);
                     item.action.execute();
                     break;
                 }
             }
-            System.out.println(failMessage);
+            System.out.println(mc.get(MessagesRU.MENU_FAIL));
         }
     }
 
@@ -76,10 +73,10 @@ public class Menu {
 
     private static class Item {
         public final int id;
-        public final String text;
+        public final MessagesRU text;
         public final Action action;
 
-        public Item(int id, String text, Action action) {
+        public Item(int id, MessagesRU text, Action action) {
             this.id = id;
             this.text = text;
             this.action = action;

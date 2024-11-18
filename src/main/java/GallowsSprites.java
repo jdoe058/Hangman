@@ -4,12 +4,12 @@ import java.util.List;
 public enum GallowsSprites {
     BASE("+====+\t", "      \t"),
     PILLAR("|\t", " \t"),
-    BEAM("  +--+", "      \t"),
+    BEAM("  +--+\t", "      \t"),
     HEAD("  o  ", "     "),
     TORSO("|", " "),
-    LEFT_HAND(" /", "  "),
-    RIGHT_HAND("\\ ", "  "),
-    LEFT_FOOT("/ ", "  "),
+    LEFT_HAND(" /", "  "),      // пустота над ступней
+    RIGHT_HAND("\\ ", "  "),    // пустота над ступней
+    LEFT_FOOT("/ ", "  "),      // пустота под торсом
     RIGHT_FOOT("\\", " "),
     LEFT_SOLE("_", " "),
     RIGHT_SOLE("_", " ");
