@@ -9,15 +9,14 @@ public class Gallows {
         hangman.addAll(List.of(GallowsSprites.values()));
     }
 
-    //TODO по нормальному назвать параметры
-    public void init(int start, int last) {
+    public void init(int startHangingsCount, int ignoreLastSprites) {
         init();
 
-        for (int i = 0; i < start; i++) {
+        for (int i = 0; i < startHangingsCount; i++) {
             nextStepHanging();
         }
 
-        for (int i = 0; i < last; i++) {
+        for (int i = 0; i < ignoreLastSprites; i++) {
             hangman.pollLast();
         }
     }
