@@ -1,6 +1,9 @@
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Свернутая иерархия классов помещаемых на виселицу
+ */
 public enum GallowsSprites {
     BASE("+====+\t", "      \t"),
     PILLAR("|\t", " \t"),

@@ -1,9 +1,12 @@
-import java.util.Scanner;
+import java.io.IOException;
+import java.net.URISyntaxException;
+import java.util.*;
 
 public class Main {
-    final Scanner scanner = new Scanner(System.in);
-    final MessageCenter mc = new MessageCenter();
-    final Menu menu = new Menu(scanner, mc);
+    final private Scanner scanner = new Scanner(System.in);
+    final private MessageCenter mc = new MessageCenter();
+    final private Menu menu = new Menu(scanner, mc);
+    final private Dictionary dictionary = new Dictionary();
 
     private Level level = Level.MIDDLE;
     private Lang lang;
@@ -26,6 +29,8 @@ public class Main {
 
     void init() {
 
+        dictionary.init();
+
         setLang(Lang.RU);
 
         Menu langMenu = new Menu(scanner, mc);
@@ -43,7 +48,7 @@ public class Main {
 
         menu.add(MessagesRU.START, () -> {
             scanner.nextLine();
-            SecretWord secretWord = new SecretWord(lang.getRandomWord());
+            SecretWord secretWord = new SecretWord(dictionary.getRandomWord(lang));
             Game game = new Game(scanner, getTitle(), secretWord, mc, lang.regex);
             game.init(level.startOpenLetters, level.startHangingsCount, level.ignoreLastSprites);
             game.run();

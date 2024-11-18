@@ -1,14 +1,11 @@
-import java.util.List;
-import java.util.Random;
-
 public enum Lang {
-    RU(Dictionary.storage, "^[А-ЯЁ]$") {
+    RU("^[А-ЯЁ]$", "words.txt") {
         public String get(MessagesRU message) {
             return message.get();
         }
     },
 
-    EN(Dictionary.storageEN, "^[A-Z]$") {
+    EN("^[A-Z]$", "words_en.txt") {
         public String get(MessagesRU message) {
             return MessagesEN.valueOf(
                     message.name())
@@ -16,18 +13,14 @@ public enum Lang {
         }
     };
 
-    final private List<String> dictionary;
     final public String regex;
+    final public String fileName;
 
-    Lang(List<String> dictionary, String regex) {
-        this.dictionary = dictionary;
+    Lang(String regex, String fileName) {
         this.regex = regex;
+        this.fileName = fileName;
     }
 
     abstract public String get(MessagesRU message);
-    static private final Random random = new Random();
 
-    public String getRandomWord() {
-        return dictionary.get(random.nextInt(dictionary.size()));
-    }
 }

@@ -2,12 +2,12 @@
 import java.util.*;
 
 public class Game {
-    final Gallows gallows;
-    final Render render;
-    final InputDialog dialog;
-    final SecretWord secretWord;
-    final MessageCenter mc;
-    final String title;
+    final private Gallows gallows;
+    final private Render render;
+    final private InputDialog dialog;
+    final private SecretWord secretWord;
+    final private MessageCenter mc;
+    final private String title;
 
     public Game(Scanner scanner, String title, SecretWord secretWord, MessageCenter mc, String regex) {
         this.mc = mc;
