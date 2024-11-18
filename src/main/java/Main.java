@@ -3,13 +3,14 @@ import java.util.Scanner;
 public class Main {
     final Scanner scanner = new Scanner(System.in);
     final MessageCenter mc = new MessageCenter();
-    final Dictionary dictionary = new Dictionary();
-    final Menu menu = new Menu(scanner, mc, "");
+    final Menu menu = new Menu(scanner, mc);
 
     private Level level = Level.MIDDLE;
+    private Lang lang;
     boolean isRunning;
 
     private void setLang(Lang lang) {
+        this.lang = lang;
         mc.setLang(lang);
         menu.setTitle(getTitle());
     }
@@ -27,13 +28,13 @@ public class Main {
 
         setLang(Lang.RU);
 
-        Menu langMenu = new Menu(scanner, mc, "");
+        Menu langMenu = new Menu(scanner, mc);
         langMenu.add(MessagesRU.LANG_EN, () -> setLang(Lang.EN));
         langMenu.add(MessagesRU.LANG_RU, () -> setLang(Lang.RU));
         langMenu.add(MessagesRU.MENU_BACK, () -> {
         });
 
-        Menu levelMenu = new Menu(scanner, mc, "");
+        Menu levelMenu = new Menu(scanner, mc);
         levelMenu.add(MessagesRU.LEVEL_HIGH, () -> setLevel(Level.HIGH));
         levelMenu.add(MessagesRU.LEVEL_MEDIUM, () -> setLevel(Level.MIDDLE));
         levelMenu.add(MessagesRU.LEVEL_EASY, () -> setLevel(Level.EASY));
@@ -42,8 +43,8 @@ public class Main {
 
         menu.add(MessagesRU.START, () -> {
             scanner.nextLine();
-            SecretWord secretWord = new SecretWord(dictionary.getRandomWord());
-            Game game = new Game(scanner, getTitle(), secretWord, mc);
+            SecretWord secretWord = new SecretWord(lang.getRandomWord());
+            Game game = new Game(scanner, getTitle(), secretWord, mc, lang.regex);
             game.init(level.startOpenLetters, level.startHangingsCount, level.ignoreLastSprites);
             game.run();
         });

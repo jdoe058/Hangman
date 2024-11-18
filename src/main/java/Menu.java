@@ -16,10 +16,9 @@ public class Menu {
     private int id = START_ID;
     private final List<Item> items = new ArrayList<>();
 
-    public Menu(Scanner scanner, MessageCenter mc, String title) {
+    public Menu(Scanner scanner, MessageCenter mc) {
         this.scanner = scanner;
         this.mc = mc;
-        this.title = title;
     }
 
     public void setTitle(String title) {

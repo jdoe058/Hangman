@@ -3,11 +3,13 @@ import java.util.Scanner;
 
 public class InputDialog {
     final private Scanner scanner;
+    final private String regex;
 
     private String lastInput = "";
 
-    public InputDialog(Scanner scanner) {
+    public InputDialog(Scanner scanner, String regex) {
         this.scanner = scanner;
+        this.regex = regex;
     }
 
     public String getLastInput() {
@@ -17,7 +19,7 @@ public class InputDialog {
     public Optional<Character> getLetter() {
         String line = scanner.nextLine().trim().toUpperCase();
         lastInput = line;
-        return line.matches("^[А-ЯЁ]$")
+        return line.matches(regex)
                 ? Optional.of(line.charAt(0))
                 : Optional.empty();
     }

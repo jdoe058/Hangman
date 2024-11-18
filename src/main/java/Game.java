@@ -9,13 +9,13 @@ public class Game {
     final MessageCenter mc;
     final String title;
 
-    public Game(Scanner scanner, String title, SecretWord secretWord, MessageCenter mc) {
+    public Game(Scanner scanner, String title, SecretWord secretWord, MessageCenter mc, String regex) {
         this.mc = mc;
         this.title = title;
         this.secretWord = secretWord;
         gallows = new Gallows();
         render = new Render(gallows);
-        dialog = new InputDialog(scanner);
+        dialog = new InputDialog(scanner, regex);
     }
 
     public void init(int startOpenLetters, int startHangingsCount, int ignoreLastSprites) {
