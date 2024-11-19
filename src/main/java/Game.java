@@ -64,6 +64,6 @@ public class Game {
         return isOver ?
                 hangmanField.isHanged() ?
                         lang.rb.getString("LOSE") : lang.rb.getString("WIN")
-                : lang.rb.getString("INPUT") + dialog.getLastInput();
+                : lang.rb.getString("INPUT") + " " + dialog.getLastInput();
     }
 }

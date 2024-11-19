@@ -4,7 +4,7 @@ public class Main {
     final private Scanner scanner = new Scanner(System.in);
     private Lang lang = Lang.LANG_EN;
     final private Menu menu = new Menu(scanner, lang);
-    final private Dictionary dictionary = new Dictionary();
+    final private Random random = new Random();
 
     private Level level = Level.LEVEL_MEDIUM;
 
@@ -34,14 +34,14 @@ public class Main {
 
     private void startGame() {
         scanner.nextLine();
-        SecretWord secretWord = new SecretWord(dictionary.getRandomWord(lang));
+        String[] dict = lang.rb.getString("DICT").split(" ");
+        SecretWord secretWord = new SecretWord(dict[random.nextInt(dict.length)]);
         Game game = new Game(scanner, getTitle(), secretWord, lang);
         game.init(level.startOpenLetters);
         game.run();
     }
 
     void init() {
-        dictionary.init();
         scrollLang();
         menu.add("MENU_START",this::startGame);
         menu.add("MENU_LANG", this::scrollLang);
