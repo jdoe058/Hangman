@@ -25,6 +25,9 @@ public class Main {
         return "%s, %s".formatted(mc.get(MessagesRU.GAME), mc.get(level.title));
     }
 
+    void back() {
+    }
+
     void init() {
 
         dictionary.init();
@@ -34,15 +37,13 @@ public class Main {
         Menu langMenu = new Menu(scanner, mc);
         langMenu.add(MessagesRU.LANG_EN, () -> setLang(Lang.EN));
         langMenu.add(MessagesRU.LANG_RU, () -> setLang(Lang.RU));
-        langMenu.add(MessagesRU.MENU_BACK, () -> {
-        });
+        langMenu.add(MessagesRU.MENU_BACK, this::back);
 
         Menu levelMenu = new Menu(scanner, mc);
         levelMenu.add(MessagesRU.LEVEL_HIGH, () -> setLevel(Level.HIGH));
         levelMenu.add(MessagesRU.LEVEL_MEDIUM, () -> setLevel(Level.MIDDLE));
         levelMenu.add(MessagesRU.LEVEL_EASY, () -> setLevel(Level.EASY));
-        levelMenu.add(MessagesRU.MENU_BACK, () -> {
-        });
+        levelMenu.add(MessagesRU.MENU_BACK, this::back);
 
         menu.add(MessagesRU.START, () -> {
             scanner.nextLine();

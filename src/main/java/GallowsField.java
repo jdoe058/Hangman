@@ -1,9 +1,8 @@
 import java.util.*;
 
-public class Gallows {
+public class GallowsField {
     final private Set<GallowsSprites> gallows = new HashSet<>();
     final private Deque<GallowsSprites> hangman = new ArrayDeque<>();
-    final private Set<Character> wrongLetters = new HashSet<>();
 
     public void init() {
         hangman.addAll(List.of(GallowsSprites.values()));
@@ -29,16 +28,7 @@ public class Gallows {
         gallows.add(hangman.poll());
     }
 
-    public void nextStepHanging(char letter) {
-        wrongLetters.add(letter);
-        nextStepHanging();
-    }
-
     public boolean contains(GallowsSprites hangman) {
         return gallows.contains(hangman);
-    }
-
-    public String getLetters() {
-        return "(%d) %s".formatted(wrongLetters.size(), wrongLetters);
     }
 }

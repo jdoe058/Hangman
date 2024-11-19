@@ -18,7 +18,7 @@ public class Dictionary {
         for (var lang : Lang.values()) {
             try {
                 var path = Paths.get(Objects.requireNonNull(
-                        Main.class.getClassLoader().getResource(lang.fileName)).toURI());
+                        getClass().getClassLoader().getResource(lang.fileName)).toURI());
                 var list = Files.lines(path, StandardCharsets.UTF_8).
                         flatMap(x -> Arrays.stream(x.split(" "))).toList();
                 storage.put(lang, list);

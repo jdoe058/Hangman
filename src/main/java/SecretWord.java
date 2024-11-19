@@ -1,45 +1,40 @@
-import java.util.HashSet;
-import java.util.Random;
-import java.util.Set;
-import java.util.stream.Collectors;
+import java.util.*;
 
 public class SecretWord {
-    private static final int MASK = '_';
-    private static final CharSequence DELIMITER = " ";
-    final private String word;
-    final private Set<Character> guessedLetters = new HashSet<>();
+
+    final public String word;
+    final public Set<Character> guessedLetters = new HashSet<>();
+    final public Set<Character> wrongLetters = new HashSet<>();
 
     public SecretWord(String word) {
         this.word = word.toUpperCase();
     }
 
-    public String getLetters() {
-        return "(%d) %s".formatted(guessedLetters.size(),guessedLetters);
+    public String getMaskedWord(boolean isOver, String mask, String delimiter) {
+        List<String> list = new ArrayList<>();
+        for (char c : word.toCharArray()) {
+            list.add(!isOver && !guessedLetters.contains(c) ? mask : String.valueOf(c));
+        }
+        return String.join(delimiter, list);
     }
 
-    public String getMaskedWord() {
-        return word.chars()
-                .map(x -> guessedLetters.contains((char)x) ? x : MASK)
-                .mapToObj(Character::toString)
-                .collect(Collectors.joining(DELIMITER));
-    }
-
-    public String getWord() {
-        return word.chars()
-                .mapToObj(Character::toString)
-                .collect(Collectors.joining(DELIMITER));
+    public boolean isSolved() {
+        for (char c : word.toCharArray()) {
+            if (!guessedLetters.contains(c)) {
+                return false;
+            }
+        }
+        return true;
     }
 
     public boolean check(Character c) {
         if (word.contains(c.toString())) {
             guessedLetters.add(c);
             return true;
+        } else {
+            wrongLetters.add(c);
+            return false;
         }
-        return false;
-    }
-
-    public boolean isSolved() {
-        return word.chars().allMatch(x -> guessedLetters.contains((char)x));
     }
 
     public void openRandomLetter() {

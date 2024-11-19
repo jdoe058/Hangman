@@ -22,5 +22,4 @@ public enum Lang {
     }
 
     abstract public String get(MessagesRU message);
-
 }

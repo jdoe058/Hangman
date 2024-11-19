@@ -1,19 +1,28 @@
 import java.util.ArrayList;
-import java.util.Queue;
+import java.util.List;
 
 public class Render {
-    final Gallows gallows;
+    final private GallowsField gallowsField;
+    final private SecretWordView swv;
 
-    public Render(Gallows gallows) {
-        this.gallows = gallows;
+
+    public Render(GallowsField gallowsField, SecretWordView swv) {
+        this.gallowsField = gallowsField;
+        this.swv = swv;
     }
 
-    void render(Queue<String> blog) {
-        ArrayList<String> list = new ArrayList<>();
+    void render() {
+        List<String> list = new ArrayList<>();
+        List<String> blog = swv.get();
+
+        int i = 0;
         for (var s : GallowsSprites.rowSprites) {
-            list.add(s.getSprite(gallows) + blog.poll());
+            var ss = s.getSprite(gallowsField);
+            if (i < 3) {
+                ss +=  blog.get(i++);
+            }
+            list.add(ss);
         }
-        blog.clear();
         System.out.println(String.join("\n", list));
     }
 }
