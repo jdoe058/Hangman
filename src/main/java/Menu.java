@@ -10,19 +10,23 @@ public class Menu {
     private final static int START_ID = 1;
 
     private final Scanner scanner;
-    private final MessageCenter mc;
+    private Lang lang;
 
     private String title;
     private int id = START_ID;
     private final List<Item> items = new ArrayList<>();
 
-    public Menu(Scanner scanner, MessageCenter mc) {
+    public Menu(Scanner scanner, Lang lang) {
         this.scanner = scanner;
-        this.mc = mc;
+        this.lang = lang;
     }
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public void setLang(Lang lang) {
+        this.lang = lang;
     }
 
     public void add(String text, Action action) {
@@ -35,7 +39,7 @@ public class Menu {
         System.out.println(title);
         System.out.println(border);
         for (Item item : items) {
-            System.out.printf("%d. %s \n", item.id, mc.get(item.text));
+            System.out.printf("%d. %s \n", item.id, lang.rb.getString((item.text)));
         }
         System.out.println(border);
     }
@@ -43,7 +47,7 @@ public class Menu {
     public void select() {
 
         while (true) {
-            System.out.println(mc.get(MessagesRU.MENU_SELECT));
+            System.out.println(lang.rb.getString("MENU_SELECT"));
             String key = scanner.next();
             if (isInteger(key)) {
                 int num = Integer.parseInt(key);
@@ -53,7 +57,7 @@ public class Menu {
                     break;
                 }
             }
-            System.out.println(mc.get(MessagesRU.MENU_FAIL));
+            System.out.println(lang.rb.getString("MENU_FAIL"));
         }
     }
 

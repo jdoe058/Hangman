@@ -2,71 +2,51 @@ import java.util.*;
 
 public class Main {
     final private Scanner scanner = new Scanner(System.in);
-    final private MessageCenter mc = new MessageCenter();
-    final private Menu menu = new Menu(scanner, mc);
+    private Lang lang = Lang.LANG_EN;
+    final private Menu menu = new Menu(scanner, lang);
     final private Dictionary dictionary = new Dictionary();
 
     private Level level = Level.LEVEL_MEDIUM;
-    private Lang lang;
+
     boolean isRunning;
 
-    private void setLang(Lang lang) {
-        this.lang = lang;
-        mc.setLang(lang);
+    private void scrollLang() {
+        lang = switch (lang) {
+            case LANG_EN -> Lang.LANG_RU;
+            case LANG_RU -> Lang.LANG_EN;
+        };
+        menu.setLang(lang);
         menu.setTitle(getTitle());
     }
 
-    private void setLevel(Level level) {
-        this.level = level;
+    private void scrollLevel () {
+        level = switch (level) {
+            case LEVEL_HIGH -> Level.LEVEL_MEDIUM;
+            case LEVEL_MEDIUM -> Level.LEVEL_EASY;
+            case LEVEL_EASY -> Level.LEVEL_HIGH;
+        };
         menu.setTitle(getTitle());
     }
 
     private String getTitle() {
-        return "%s, %s".formatted(mc.get(MessagesRU.GAME), mc.get(level.name()));
+        return "%s, %s".formatted(lang.rb.getString("GAME"), lang.rb.getString(level.name()));
     }
 
-    void back() {
+    private void startGame() {
+        scanner.nextLine();
+        SecretWord secretWord = new SecretWord(dictionary.getRandomWord(lang));
+        Game game = new Game(scanner, getTitle(), secretWord, lang);
+        game.init(level.startOpenLetters);
+        game.run();
     }
 
     void init() {
-
         dictionary.init();
-
-        setLang(Lang.LANG_RU);
-
-        Menu langMenu = new Menu(scanner, mc);
-        langMenu.add(Lang.LANG_RU.name(), () -> setLang(Lang.LANG_RU));
-        langMenu.add(Lang.LANG_EN.name(), () -> setLang(Lang.LANG_EN));
-        langMenu.add(MessagesRU.MENU_BACK.name(), this::back);
-
-        Menu levelMenu = new Menu(scanner, mc);
-        levelMenu.add(Level.LEVEL_HIGH.name(), () -> setLevel(Level.LEVEL_HIGH));
-        levelMenu.add(Level.LEVEL_MEDIUM.name(), () -> setLevel(Level.LEVEL_MEDIUM));
-        levelMenu.add(Level.LEVEL_EASY.name(), () -> setLevel(Level.LEVEL_EASY));
-        levelMenu.add(MessagesRU.MENU_BACK.name(), this::back);
-
-        menu.add(MessagesRU.START.name(), () -> {
-            scanner.nextLine();
-            SecretWord secretWord = new SecretWord(dictionary.getRandomWord(lang));
-            Game game = new Game(scanner, getTitle(), secretWord, mc, lang.regex);
-            game.init(level.startOpenLetters);
-            game.run();
-        });
-
-        menu.add(MessagesRU.MENU_LANGUAGE.name(), () -> {
-            langMenu.setTitle(mc.get(MessagesRU.MENU_LANGUAGE));
-            langMenu.show();
-            langMenu.select();
-        });
-
-        menu.add(MessagesRU.MENU_LEVEL.name(), () -> {
-            levelMenu.setTitle(mc.get(MessagesRU.MENU_LEVEL));
-            levelMenu.show();
-            levelMenu.select();
-        });
-
-        menu.add(MessagesRU.EXIT.name(), () -> isRunning = false);
-
+        scrollLang();
+        menu.add("MENU_START",this::startGame);
+        menu.add("MENU_LANG", this::scrollLang);
+        menu.add("MENU_LEVEL", this::scrollLevel);
+        menu.add("MENU_EXIT", () -> isRunning = false);
         isRunning = true;
     }
 

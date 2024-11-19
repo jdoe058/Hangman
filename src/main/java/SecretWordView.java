@@ -3,19 +3,19 @@ import java.util.List;
 
 public class SecretWordView {
     final private SecretWord swc;
-    final private MessageCenter mc;
+    final private Lang lang;
 
-    public SecretWordView(SecretWord swc, MessageCenter mc) {
+    public SecretWordView(SecretWord swc, Lang lang) {
         this.swc = swc;
-        this.mc = mc;
+        this.lang = lang;
     }
 
     public List<String> get(boolean isGameOver) {
         List<String> list = new ArrayList<>();
-        list.add(mc.get(MessagesRU.WORD) + swc.getMaskedWord(isGameOver, "*", "_"));
-        list.add(mc.get(MessagesRU.HITS) + " (%d) %s".formatted(
+        list.add(lang.rb.getString("WORD") + swc.getMaskedWord(isGameOver, "*", "_"));
+        list.add(lang.rb.getString("HITS") + " (%d) %s".formatted(
                 swc.guessedLetters.size(), swc.guessedLetters));
-        list.add(mc.get(MessagesRU.MISS) + " (%d) %s".formatted(
+        list.add(lang.rb.getString("MISS") + " (%d) %s".formatted(
                 swc.wrongLetters.size(), swc.wrongLetters));
         return list;
     }

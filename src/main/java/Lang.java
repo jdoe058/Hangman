@@ -1,31 +1,20 @@
-public enum Lang {
-    LANG_RU("^[А-ЯЁ]$", "words.txt") {
-        public String get(MessagesRU message) {
-            return message.get();
-        }
-        public String get(String name) {
-            return MessagesRU.valueOf(name).get();
-        }
-    },
+import java.util.Locale;
+import java.util.ResourceBundle;
 
-    LANG_EN("^[A-Z]$", "words_en.txt") {
-        public String get(MessagesRU message) {
-            return MessagesEN.valueOf(
-                    message.name()).get();
-        }
-        public String get(String name) {
-            return MessagesEN.valueOf(name).get();
-        }
-    };
+public enum Lang {
+    LANG_RU("^[А-ЯЁ]$", "words.txt",
+            ResourceBundle.getBundle("messages", new Locale("ru", "RU"))),
+
+    LANG_EN("^[A-Z]$", "words_en.txt",
+            ResourceBundle.getBundle("messages", Locale.US));
 
     final public String regex;
     final public String fileName;
+    final public ResourceBundle rb;
 
-    Lang(String regex, String fileName) {
+    Lang(String regex, String fileName, ResourceBundle rb) {
         this.regex = regex;
         this.fileName = fileName;
+        this.rb = rb;
     }
-
-    abstract public String get(MessagesRU message);
-    abstract public String get(String name);
 }

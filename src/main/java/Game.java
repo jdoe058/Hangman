@@ -4,17 +4,17 @@ public class Game {
     final private HangmanField hangmanField = new HangmanField();
     final private SecretWord secretWord;
     final private SecretWordView SecretWordView;
-    final private MessageCenter mc;
     final private InputDialog dialog;
     final private String title;
+    final private Lang lang;
     private boolean isOver = false;
 
-    public Game(Scanner scanner, String title, SecretWord secretWord, MessageCenter mc, String regex) {
-        this.mc = mc;
+    public Game(Scanner scanner, String title, SecretWord secretWord, Lang lang) {
+        this.lang = lang;
         this.title = title;
-        this.dialog = new InputDialog(scanner, regex);
+        this.dialog = new InputDialog(scanner, lang.regex);
         this.secretWord = secretWord;
-        this.SecretWordView = new SecretWordView(secretWord, mc);
+        this.SecretWordView = new SecretWordView(secretWord, lang);
     }
 
     public void init(int startOpenLetters) {
@@ -63,7 +63,7 @@ public class Game {
     private String getFooterMessage() {
         return isOver ?
                 hangmanField.isHanged() ?
-                        mc.get(MessagesRU.LOSE) : mc.get(MessagesRU.WIN)
-                : mc.get(MessagesRU.INPUT) + dialog.getLastInput();
+                        lang.rb.getString("LOSE") : lang.rb.getString("WIN")
+                : lang.rb.getString("INPUT") + dialog.getLastInput();
     }
 }
