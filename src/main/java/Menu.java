@@ -25,7 +25,7 @@ public class Menu {
         this.title = title;
     }
 
-    public void add(MessagesRU text, Action action) {
+    public void add(String text, Action action) {
         Item item = new Item(id++, text, action);
         items.add(item);
     }
@@ -72,10 +72,10 @@ public class Menu {
 
     private static class Item {
         public final int id;
-        public final MessagesRU text;
+        public final String text;
         public final Action action;
 
-        public Item(int id, MessagesRU text, Action action) {
+        public Item(int id, String text, Action action) {
             this.id = id;
             this.text = text;
             this.action = action;

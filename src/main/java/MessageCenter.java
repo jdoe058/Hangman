@@ -9,4 +9,8 @@ public class MessageCenter {
     public String get(MessagesRU message) {
         return lang.get(message);
     }
+
+    public String get(String name) {
+        return lang.get(name);
+    }
 }

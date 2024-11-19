@@ -6,7 +6,7 @@ public class Main {
     final private Menu menu = new Menu(scanner, mc);
     final private Dictionary dictionary = new Dictionary();
 
-    private Level level = Level.MIDDLE;
+    private Level level = Level.LEVEL_MEDIUM;
     private Lang lang;
     boolean isRunning;
 
@@ -22,7 +22,7 @@ public class Main {
     }
 
     private String getTitle() {
-        return "%s, %s".formatted(mc.get(MessagesRU.GAME), mc.get(level.title));
+        return "%s, %s".formatted(mc.get(MessagesRU.GAME), mc.get(level.name()));
     }
 
     void back() {
@@ -32,20 +32,20 @@ public class Main {
 
         dictionary.init();
 
-        setLang(Lang.RU);
+        setLang(Lang.LANG_RU);
 
         Menu langMenu = new Menu(scanner, mc);
-        langMenu.add(MessagesRU.LANG_EN, () -> setLang(Lang.EN));
-        langMenu.add(MessagesRU.LANG_RU, () -> setLang(Lang.RU));
-        langMenu.add(MessagesRU.MENU_BACK, this::back);
+        langMenu.add(Lang.LANG_RU.name(), () -> setLang(Lang.LANG_RU));
+        langMenu.add(Lang.LANG_EN.name(), () -> setLang(Lang.LANG_EN));
+        langMenu.add(MessagesRU.MENU_BACK.name(), this::back);
 
         Menu levelMenu = new Menu(scanner, mc);
-        levelMenu.add(MessagesRU.LEVEL_HIGH, () -> setLevel(Level.HIGH));
-        levelMenu.add(MessagesRU.LEVEL_MEDIUM, () -> setLevel(Level.MIDDLE));
-        levelMenu.add(MessagesRU.LEVEL_EASY, () -> setLevel(Level.EASY));
-        levelMenu.add(MessagesRU.MENU_BACK, this::back);
+        levelMenu.add(Level.LEVEL_HIGH.name(), () -> setLevel(Level.LEVEL_HIGH));
+        levelMenu.add(Level.LEVEL_MEDIUM.name(), () -> setLevel(Level.LEVEL_MEDIUM));
+        levelMenu.add(Level.LEVEL_EASY.name(), () -> setLevel(Level.LEVEL_EASY));
+        levelMenu.add(MessagesRU.MENU_BACK.name(), this::back);
 
-        menu.add(MessagesRU.START, () -> {
+        menu.add(MessagesRU.START.name(), () -> {
             scanner.nextLine();
             SecretWord secretWord = new SecretWord(dictionary.getRandomWord(lang));
             Game game = new Game(scanner, getTitle(), secretWord, mc, lang.regex);
@@ -53,19 +53,19 @@ public class Main {
             game.run();
         });
 
-        menu.add(MessagesRU.MENU_LANGUAGE, () -> {
+        menu.add(MessagesRU.MENU_LANGUAGE.name(), () -> {
             langMenu.setTitle(mc.get(MessagesRU.MENU_LANGUAGE));
             langMenu.show();
             langMenu.select();
         });
 
-        menu.add(MessagesRU.MENU_LEVEL, () -> {
+        menu.add(MessagesRU.MENU_LEVEL.name(), () -> {
             levelMenu.setTitle(mc.get(MessagesRU.MENU_LEVEL));
             levelMenu.show();
             levelMenu.select();
         });
 
-        menu.add(MessagesRU.EXIT, () -> isRunning = false);
+        menu.add(MessagesRU.EXIT.name(), () -> isRunning = false);
 
         isRunning = true;
     }

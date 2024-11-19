@@ -1,17 +1,11 @@
 public enum Level {
-    HIGH(MessagesRU.LEVEL_HIGH, 0, 3, 2),
-    MIDDLE(MessagesRU.LEVEL_MEDIUM, 1, 3, 0),
-    EASY(MessagesRU.LEVEL_EASY, 2, 0, 0);
+    LEVEL_HIGH(0),
+    LEVEL_MEDIUM(1),
+    LEVEL_EASY(2);
 
-    final public MessagesRU title;
     final public int startOpenLetters;
-    final public int startHangingsCount;
-    final public int ignoreLastSprites;
 
-    Level(MessagesRU title, int startOpenLetters, int startHangingsCount, int ignoreLastSprites) {
-        this.title = title;
+    Level(int startOpenLetters) {
         this.startOpenLetters = startOpenLetters;
-        this.startHangingsCount = startHangingsCount;
-        this.ignoreLastSprites = ignoreLastSprites;
     }
 }
