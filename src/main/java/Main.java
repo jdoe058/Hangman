@@ -49,7 +49,7 @@ public class Main {
             scanner.nextLine();
             SecretWord secretWord = new SecretWord(dictionary.getRandomWord(lang));
             Game game = new Game(scanner, getTitle(), secretWord, mc, lang.regex);
-            game.init(level.startOpenLetters, level.startHangingsCount, level.ignoreLastSprites);
+            game.init(level.startOpenLetters);
             game.run();
         });
 

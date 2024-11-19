@@ -4,7 +4,6 @@ import java.util.Scanner;
 public class InputDialog {
     final private Scanner scanner;
     final private String regex;
-
     private String lastInput = "";
 
     public InputDialog(Scanner scanner, String regex) {
