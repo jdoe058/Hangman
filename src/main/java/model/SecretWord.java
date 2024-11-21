@@ -15,7 +15,11 @@ public class SecretWord {
     public String getMaskedWord(boolean isOver, String mask, String delimiter) {
         List<String> list = new ArrayList<>();
         for (char c : word.toCharArray()) {
-            list.add(!isOver && !guessedLetters.contains(c) ? mask : String.valueOf(c));
+            if (isOver || guessedLetters.contains(c)) {
+                list.add(String.valueOf(c));
+            } else {
+                list.add(mask);
+            }
         }
         return String.join(delimiter, list);
     }

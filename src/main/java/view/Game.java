@@ -41,21 +41,23 @@ public class Game {
 
     private void render(boolean isOver, String message) {
         List<String> list = new ArrayList<>();
-        List<String> hf = getHangmanFieldPrepare();
-        List<String> swv = getSecretWordPrepare(isOver);
+        List<String> hangmanFieldPrepared = getHangmanFieldPrepared();
+        List<String> secretWordPrepared = getSecretWordPrepared(isOver);
 
-        list.add(hf.get(0) + title);
-        list.add(hf.get(1));
-        list.add(hf.get(2) + swv.get(0));
-        list.add(hf.get(3) + swv.get(1));
-        list.add(hf.get(4) + swv.get(2));
-        list.add(hf.get(5) + message);
+        int i = 0;
+        int j = 0;
+        list.add(hangmanFieldPrepared.get(i++) + title);
+        list.add(hangmanFieldPrepared.get(i++));
+        list.add(hangmanFieldPrepared.get(i++) + secretWordPrepared.get(j++));
+        list.add(hangmanFieldPrepared.get(i++) + secretWordPrepared.get(j++));
+        list.add(hangmanFieldPrepared.get(i++) + secretWordPrepared.get(j));
+        list.add(hangmanFieldPrepared.get(i) + message);
         list.add("");
 
         System.out.println(String.join("\n", list));
     }
 
-    public List<String> getSecretWordPrepare(boolean isGameOver) {
+    public List<String> getSecretWordPrepared(boolean isGameOver) {
         List<String> list = new ArrayList<>();
         list.add(lang.rb.getString("WORD") + " " + secretWord.getMaskedWord(isGameOver, "*", "_"));
         list.add(lang.rb.getString("HITS") + " (%d) %s".formatted(
@@ -66,12 +68,12 @@ public class Game {
     }
 
     //TODO GallowsField decorate
-    public List<String> getHangmanFieldPrepare() {
+    public List<String> getHangmanFieldPrepared() {
         List<String> list = new ArrayList<>();
         list.add("   +---+\t");
         for (int i = 0; i < Hangman.HEIGHT; i++) {
             StringBuilder s = new StringBuilder(" ");
-            for (int j = 1- Hangman.HALF_WIDTH; j < Hangman.HALF_WIDTH; j++) {
+            for (int j = 1 - Hangman.HALF_WIDTH; j < Hangman.HALF_WIDTH; j++) {
                 s.append(hangmanField.getSprite(new Cell(i, j)));
             }
             list.add(s.append(" |\t").toString());
