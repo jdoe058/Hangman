@@ -4,7 +4,7 @@ import java.util.*;
 
 public class SecretWord {
 
-    final public String word;
+    final private String word;
     final public Set<Character> guessedLetters = new HashSet<>();
     final public Set<Character> wrongLetters = new HashSet<>();
 
