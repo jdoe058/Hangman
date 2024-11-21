@@ -6,14 +6,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-
-
 public class Game {
     final private Scanner scanner;
     final private Lang lang;
     final private String title;
     final private HangmanField hangmanField;
-    final private SecretWordConsolePrepare secretWordView;
+    final private SecretWord secretWord;
     final private ProcessInput processInput;
 
     public Game(Scanner scanner, Lang lang, String title, HangmanField hangmanField,
@@ -22,10 +20,9 @@ public class Game {
         this.lang = lang;
         this.title = title;
         this.hangmanField = hangmanField;
-        this.secretWordView = new SecretWordConsolePrepare(secretWord, lang);
+        this.secretWord = secretWord;
         this.processInput = processInput;
     }
-
 
     public void run() {
         render(false, "");
@@ -44,8 +41,8 @@ public class Game {
 
     private void render(boolean isOver, String message) {
         List<String> list = new ArrayList<>();
-        List<String> hf = hangmanField.get();
-        List<String> swv = secretWordView.get(isOver);
+        List<String> hf = getHangmanFieldPrepare();
+        List<String> swv = getSecretWordPrepare(isOver);
 
         list.add(hf.get(0) + title);
         list.add(hf.get(1));
@@ -57,4 +54,30 @@ public class Game {
 
         System.out.println(String.join("\n", list));
     }
+
+    public List<String> getSecretWordPrepare(boolean isGameOver) {
+        List<String> list = new ArrayList<>();
+        list.add(lang.rb.getString("WORD") + " " + secretWord.getMaskedWord(isGameOver, "*", "_"));
+        list.add(lang.rb.getString("HITS") + " (%d) %s".formatted(
+                secretWord.guessedLetters.size(), secretWord.guessedLetters));
+        list.add(lang.rb.getString("MISS") + " (%d) %s".formatted(
+                secretWord.wrongLetters.size(), secretWord.wrongLetters));
+        return list;
+    }
+
+    //TODO GallowsField decorate
+    public List<String> getHangmanFieldPrepare() {
+        List<String> list = new ArrayList<>();
+        list.add("   +---+\t");
+        for (int i = 0; i < Hangman.HEIGHT; i++) {
+            StringBuilder s = new StringBuilder(" ");
+            for (int j = 1- Hangman.HALF_WIDTH; j < Hangman.HALF_WIDTH; j++) {
+                s.append(hangmanField.getSprite(new Cell(i, j)));
+            }
+            list.add(s.append(" |\t").toString());
+        }
+        list.add("+======+\t");
+        return list;
+    }
+
 }
