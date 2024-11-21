@@ -1,3 +1,5 @@
+package model;
+
 import java.util.*;
 
 public class HangmanField {
@@ -14,13 +16,14 @@ public class HangmanField {
         field.put(part.cell, part);
     }
 
-    //TODO GallowsField decorate
+    //TODO to HangmanFieldConsolePrepare?
+    // GallowsField decorate
     public List<String> get() {
         List<String> list = new ArrayList<>();
         list.add("   +---+\t");
         for (int i = 0; i < Hangman.HEIGHT; i++) {
             StringBuilder s = new StringBuilder(" ");
-            for (int j = 1-Hangman.HALF_WIDTH; j < Hangman.HALF_WIDTH; j++) {
+            for (int j = 1- Hangman.HALF_WIDTH; j < Hangman.HALF_WIDTH; j++) {
                 Cell cell = new Cell(i, j);
                 s.append(field.containsKey(cell) ? field.get(cell).sprite : Hangman.EMPTY);
             }

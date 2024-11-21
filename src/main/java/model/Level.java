@@ -1,3 +1,5 @@
+package model;
+
 public enum Level {
     LEVEL_HIGH(0),
     LEVEL_MEDIUM(1),

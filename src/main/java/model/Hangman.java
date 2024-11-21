@@ -1,3 +1,5 @@
+package model;
+
 public enum Hangman {
     ROPE("|",new Cell(0,0)),
     HEAD("o",new Cell(1,0)),

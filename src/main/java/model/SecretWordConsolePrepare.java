@@ -1,11 +1,13 @@
+package model;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class SecretWordView {
+public class SecretWordConsolePrepare {
     final private SecretWord swc;
     final private Lang lang;
 
-    public SecretWordView(SecretWord swc, Lang lang) {
+    public SecretWordConsolePrepare(SecretWord swc, Lang lang) {
         this.swc = swc;
         this.lang = lang;
     }

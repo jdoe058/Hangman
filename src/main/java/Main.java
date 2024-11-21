@@ -1,3 +1,10 @@
+import model.HangmanField;
+import model.Lang;
+import model.Level;
+import model.SecretWord;
+import view.Game;
+import view.Menu;
+
 import java.util.*;
 
 public class Main {
@@ -19,7 +26,7 @@ public class Main {
         menu.setTitle(getTitle());
     }
 
-    private void scrollLevel () {
+    private void scrollLevel() {
         level = switch (level) {
             case LEVEL_HIGH -> Level.LEVEL_MEDIUM;
             case LEVEL_MEDIUM -> Level.LEVEL_EASY;
@@ -36,14 +43,22 @@ public class Main {
         scanner.nextLine();
         String[] dict = lang.rb.getString("DICT").split(" ");
         SecretWord secretWord = new SecretWord(dict[random.nextInt(dict.length)]);
-        Game game = new Game(scanner, getTitle(), secretWord, lang);
-        game.init(level.startOpenLetters);
-        game.run();
+        for (int i = level.startOpenLetters; i > 0; i--) {
+            secretWord.openRandomLetter();
+        }
+        HangmanField hangmanField = new HangmanField();
+        Game gv = new Game(scanner, lang,  getTitle(), hangmanField, secretWord, line -> {
+            if (!line.matches(lang.regex) || !secretWord.check(line.charAt(0))) {
+                hangmanField.hanging();
+            }
+            return hangmanField.isHanged() || secretWord.isSolved();
+        });
+        gv.run();
     }
 
     void init() {
         scrollLang();
-        menu.add("MENU_START",this::startGame);
+        menu.add("MENU_START", this::startGame);
         menu.add("MENU_LANG", this::scrollLang);
         menu.add("MENU_LEVEL", this::scrollLevel);
         menu.add("MENU_EXIT", () -> isRunning = false);

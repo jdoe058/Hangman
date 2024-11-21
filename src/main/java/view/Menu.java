@@ -1,6 +1,8 @@
-/**
+ /**
  * https://t.me/zhukovsd_it_chat/53243/114908
  */
+package view;
+import model.Lang;
 
 import java.util.ArrayList;
 import java.util.List;
