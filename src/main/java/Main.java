@@ -2,7 +2,7 @@ import model.HangmanField;
 import model.Lang;
 import model.Level;
 import model.SecretWord;
-import view.Game;
+import view.GameView;
 import view.Menu;
 
 import java.util.*;
@@ -47,7 +47,7 @@ public class Main {
             secretWord.openRandomLetter();
         }
         HangmanField hangmanField = new HangmanField();
-        Game gv = new Game(scanner, lang,  getTitle(), hangmanField, secretWord, line -> {
+        GameView gv = new GameView(scanner, lang,  getTitle(), hangmanField, secretWord, line -> {
             if (!line.matches(lang.regex) || !secretWord.check(line.charAt(0))) {
                 hangmanField.hanging();
             }

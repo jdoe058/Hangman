@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class Game {
+public class GameView {
     final private Scanner scanner;
     final private Lang lang;
     final private String title;
@@ -14,8 +14,8 @@ public class Game {
     final private SecretWord secretWord;
     final private ProcessInput processInput;
 
-    public Game(Scanner scanner, Lang lang, String title, HangmanField hangmanField,
-                SecretWord secretWord, ProcessInput processInput) {
+    public GameView(Scanner scanner, Lang lang, String title, HangmanField hangmanField,
+                    SecretWord secretWord, ProcessInput processInput) {
         this.scanner = scanner;
         this.lang = lang;
         this.title = title;
