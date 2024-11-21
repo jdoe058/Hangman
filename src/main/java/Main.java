@@ -47,13 +47,9 @@ public class Main {
             secretWord.openRandomLetter();
         }
         HangmanField hangmanField = new HangmanField();
-        GameView gv = new GameView(scanner, lang,  getTitle(), hangmanField, secretWord, line -> {
-            if (!line.matches(lang.regex) || !secretWord.check(line.charAt(0))) {
-                hangmanField.hanging();
-            }
-            return hangmanField.isHanged() || secretWord.isSolved();
-        });
-        gv.run();
+        GameController controller = new GameController(lang, hangmanField, secretWord);
+        GameView gameView = new GameView(scanner, lang,  getTitle(), hangmanField, secretWord, controller::process);
+        gameView.run();
     }
 
     void init() {
