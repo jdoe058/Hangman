@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Menu {
-    private final static int START_ID = 1;
+    protected final static int START_ID = 1;
 
     protected final Message title;
     protected final Message selectMessage;
@@ -57,7 +57,7 @@ public class Menu {
         }
     }
 
-    private static boolean isInteger(String s) {
+    protected static boolean isInteger(String s) {
         try {
             Integer.parseInt(s);
             return true;

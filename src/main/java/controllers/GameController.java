@@ -74,6 +74,7 @@ public class GameController {
         secretWordMask = mc.maskMessage(secretWord.getSecret());
         footer += " -> " + gameOverMessage();
         show();
+        inputView.getInput(mc.enterSomethingToContinue());
     }
 
     boolean isGameOver() {
@@ -81,7 +82,7 @@ public class GameController {
     }
 
     private void show() {
-        view.add(mc.titleMessage() + mc.turnMessage(turnCount));
+        view.add(mc.titleMessage() + ", " + mc.turnMessage(turnCount));
         view.add(secretWordMask);
         view.add(mc.hitsMessage(hits));
         view.add(mc.missMessage(miss));

@@ -1,38 +1,53 @@
 import controllers.GameController;
 import models.*;
-import services.MessageCenter;
+import services.*;
+import services.Dictionary;
 import services.impl.LetterValidatorFactory;
 import services.impl.MessageCenterFactory;
-import services.impl.RuMessageCenter;
 import views.*;
 
 import java.util.*;
 
 public class Main {
-    final private GroupView<String> menuHangman = new ConsoleView(new Hangman(10, 10), "\t");
+    private final static GroupView<String> menuHangman = new ConsoleView(new Hangman(10, 10), "\t");
+
     Scanner scanner = new Scanner(System.in);
-    MessageCenter mc = new RuMessageCenter();
+    InputView inputView = new ConsoleInputView(scanner);
+
     Menu menu;
     private boolean isMenuShow = true;
     private Level level = Level.MEDIUM;
     private Theme theme = Theme.GENERAL;
     private Language language = Language.RU;
+    MessageCenter mc = MessageCenterFactory.get(language);
 
 
     void startGame() {
-        Language language = Language.RU;
-        Hangman hangman = new Hangman();
+        Hangman hangman = switch (level) {
+            case EASY -> new Hangman();
+            case MEDIUM -> new Hangman(3, Hangman.MAX_STAGE_OF_HANGING);
+            case HIGH -> new Hangman(5, Hangman.MAX_STAGE_OF_HANGING - 2);
+        };
+
         GameController gameController = new GameController(
                 hangman,
                 new ConsoleView(hangman, "\t"),
-                new ConsoleInputView(scanner),
-                MessageCenterFactory.get(language),
+                inputView,
+                mc,
                 LetterValidatorFactory.get(language),
-                new SecretWord("тестирование", "_", "*"));
+                new SecretWord(Dictionary.get(language), "_", "*"));
         gameController.run();
     }
 
-    String menuTitle() {
+    String menuStartMessage() {
+        return mc.menuStartMessage();
+    }
+
+    String menuExitMessage() {
+        return mc.menuExitMessage();
+    }
+
+    String menuTitleMessage() {
         return mc.titleMessage();
     }
 
@@ -40,8 +55,15 @@ public class Main {
         isMenuShow = false;
     }
 
+    public void menuShow() {
+        while (isMenuShow) {
+            menu.show();
+            menu.select();
+        }
+    }
+
     String menuLevelMessage() {
-        return "Уровень: " + level.name();
+        return mc.menuLevelMessage() + mc.enumValueMessage(level);
     }
 
     void menuLevelSelect() {
@@ -53,7 +75,7 @@ public class Main {
     }
 
     String menuLanguageMessage() {
-        return "Язык: " + language.name();
+        return mc.menuLanguageMessage() + mc.enumValueMessage(language);
     }
 
     void menuLanguageSelect() {
@@ -61,10 +83,11 @@ public class Main {
             case RU -> Language.EN;
             case EN -> Language.RU;
         };
+        mc = MessageCenterFactory.get(language);
     }
 
     String menuThemeMessage() {
-        return "Тема: " + theme.name();
+        return mc.menuThemeMessage() + mc.enumValueMessage(theme);
     }
 
     void menuThemeSelect() {
@@ -74,26 +97,27 @@ public class Main {
         };
     }
 
-    public void menuShow() {
-        while (isMenuShow) {
-            menu.show();
-            menu.select();
-        }
+    String menuSelectMessage() {
+        return mc.menuSelectMessage();
+    }
+
+    String menuFailMessage() {
+        return mc.menuFailMessage();
     }
 
     public void menuInit() {
-        menu = new MenuGroupView(this::menuTitle, mc::menuSelectMessage, mc::menuFailMessage, menuHangman);
+        menu = new MenuGroupView(this::menuTitleMessage, this::menuSelectMessage, this::menuFailMessage,
+                menuHangman, inputView);
 
-        menu.add(mc::menuStartMessage, this::startGame);
+        menu.add(this::menuStartMessage, this::startGame);
         menu.add(this::menuLanguageMessage, this::menuLanguageSelect);
         menu.add(this::menuThemeMessage, this::menuThemeSelect);
         menu.add(this::menuLevelMessage, this::menuLevelSelect);
-        menu.add(mc::menuExitMessage, this::menuExit);
+        menu.add(this::menuExitMessage, this::menuExit);
     }
 
     public static void main(String[] args) {
         Main main = new Main();
-
         main.menuInit();
         main.menuShow();
     }

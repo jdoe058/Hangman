@@ -1,10 +1,7 @@
 package services.impl;
 
-import services.LetterValidator;
-
-public class EnLetterValidator implements LetterValidator {
-    @Override
-    public boolean isValid(String line) {
+public class EnLetterValidator {
+    public static boolean isValid(String line) {
         return line.matches("^[A-Z]$");
     }
 }
