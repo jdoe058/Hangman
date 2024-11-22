@@ -7,23 +7,22 @@ import views.*;
 import java.util.*;
 
 public class Main {
+    Scanner scanner = new Scanner(System.in);
 
-    public static void main(String[] args) {
-
-
+    void startGame() {
         Language language = Language.RU;
-
         Hangman hangman = new Hangman();
-
         GameController gameController = new GameController(
                 hangman,
                 new ConsoleView(hangman, "\t"),
-                new ConsoleInputView(new Scanner(System.in)),
+                new ConsoleInputView(scanner),
                 MessageCenterFactory.get(language),
                 LetterValidatorFactory.get(language),
                 new SecretWord("тестирование", "_", "*"));
-
         gameController.run();
+    }
 
+    public static void main(String[] args) {
+        Main main = new Main();
     }
 }

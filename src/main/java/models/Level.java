@@ -1,5 +1,5 @@
 package models;
 
 public enum Level {
-    HIGH, MEDIUM, EASY;
+    HIGH, MEDIUM, EASY
 }
