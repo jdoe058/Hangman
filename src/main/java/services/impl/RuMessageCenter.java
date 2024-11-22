@@ -55,16 +55,45 @@ public class RuMessageCenter implements MessageCenter {
         return "Буква '%s' уже была".formatted(string);
     }
 
-    public String titleMessage(int turn) {
-        return "Игра Виселица, ход: %d".formatted(turn);
+    @Override
+    public String titleMessage() {
+        return "\tИгра Виселица";
     }
 
+    @Override
+    public String turnMessage(int turn) {
+        return "ход: %d".formatted(turn);
+    }
+
+    @Override
     public String winMessage() {
         return "Вы победили!";
     }
 
+    @Override
     public String loseMessage() {
         return "Вы проиграли!";
     }
+
+    @Override
+    public String menuSelectMessage() {
+        return "Выберете пункт меню:";
+    }
+
+    @Override
+    public String menuFailMessage() {
+        return "Неверный ввод!";
+    }
+
+    @Override
+    public String menuExitMessage() {
+        return "Выход";
+    }
+
+    @Override
+    public String menuStartMessage() {
+        return "Начать";
+    }
 }
+
 

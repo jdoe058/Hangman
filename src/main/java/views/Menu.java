@@ -1,4 +1,4 @@
- /**
+ /*
  * https://t.me/zhukovsd_it_chat/53243/114908
  */
 //Menu это View
@@ -11,30 +11,30 @@ import java.util.Scanner;
 public class Menu {
     private final static int START_ID = 1;
 
-    private final String title;
-    private final String selectMessage;
-    private final String failMessage;
+    protected final Message title;
+    protected final Message selectMessage;
+    protected final Message failMessage;
 
-    private int id = START_ID;
-    private final List<Item> items = new ArrayList<>();
+    protected int id = START_ID;
+    protected final List<Item> items = new ArrayList<>();
 
-    public Menu(String title, String selectMessage, String failMessage) {
+    public Menu(Message title, Message selectMessage, Message failMessage) {
         this.title = title;
         this.selectMessage = selectMessage;
         this.failMessage = failMessage;
     }
 
-    public void add(String text, Action action) {
+    public void add(Message text, Action action) {
         Item item = new Item(id++, text, action);
         items.add(item);
     }
 
     public void show() {
         final String border = "---";
-        System.out.println(title);
+        System.out.println(title.message());
         System.out.println(border);
         for (Item item : items) {
-            System.out.printf("%d. %s \n", item.id, item.text);
+            System.out.printf("%d. %s \n", item.id, item.text.message());
         }
         System.out.println(border);
     }
@@ -43,7 +43,7 @@ public class Menu {
         Scanner scanner = new Scanner(System.in);
 
         while (true) {
-            System.out.println(selectMessage);
+            System.out.println(selectMessage.message());
             String key = scanner.next();
             if (isInteger(key)) {
                 int num = Integer.parseInt(key);
@@ -53,7 +53,7 @@ public class Menu {
                     break;
                 }
             }
-            System.out.println(failMessage);
+            System.out.println(failMessage.message());
         }
     }
 
@@ -70,12 +70,16 @@ public class Menu {
         void execute();
     }
 
-    private static class Item {
+    public interface Message {
+        String message();
+    }
+
+    protected static class Item {
         public final int id;
-        public final String text;
+        public final Message text;
         public final Action action;
 
-        public Item(int id, String text, Action action) {
+        public Item(int id, Message text, Action action) {
             this.id = id;
             this.text = text;
             this.action = action;

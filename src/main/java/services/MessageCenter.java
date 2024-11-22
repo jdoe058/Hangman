@@ -16,7 +16,13 @@ public interface MessageCenter {
     String letterNotWordMessage(String string);
     String letterWasAlreadyThereMessage(String string);
 
-    String titleMessage(int turn);
+    String titleMessage();
+    String turnMessage(int turn);
     String winMessage();
     String loseMessage();
+
+    String menuFailMessage();
+    String menuSelectMessage();
+    String menuExitMessage();
+    String menuStartMessage();
 }

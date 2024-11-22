@@ -81,7 +81,7 @@ public class GameController {
     }
 
     private void show() {
-        view.add(mc.titleMessage(turnCount));
+        view.add(mc.titleMessage() + mc.turnMessage(turnCount));
         view.add(secretWordMask);
         view.add(mc.hitsMessage(hits));
         view.add(mc.missMessage(miss));
