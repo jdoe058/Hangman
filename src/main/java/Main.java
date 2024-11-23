@@ -1,7 +1,7 @@
 import controllers.GameController;
 import models.*;
 import services.*;
-import services.Dictionary;
+import models.Dictionary;
 import services.impl.LetterValidatorFactory;
 import services.impl.MessageCenterFactory;
 import views.*;
@@ -10,11 +10,12 @@ import java.util.*;
 
 public class Main {
     private final static GroupView<String> menuHangman = new ConsoleView(new Hangman(10, 10), "\t");
+    private final Random random = new Random();
+    private final Scanner scanner = new Scanner(System.in);
+    private final InputView inputView = new ConsoleInputView(scanner);
 
-    Scanner scanner = new Scanner(System.in);
-    InputView inputView = new ConsoleInputView(scanner);
+    private Menu menu;
 
-    Menu menu;
     private boolean isMenuShow = true;
     private Level level = Level.MEDIUM;
     private Theme theme = Theme.GENERAL;
@@ -29,13 +30,23 @@ public class Main {
             case HIGH -> new Hangman(5, Hangman.MAX_STAGE_OF_HANGING - 2);
         };
 
+        List<String> dict;
+        try {
+            dict = Dictionary.INSTANCE.get(theme, language);
+        } catch (DictionaryNotFountException e) {
+            inputView.getInput(mc.dictionaryNotFoundMessage(theme, language));
+            return;
+        }
+
+        String word = dict.get(random.nextInt(dict.size()));
+
         GameController gameController = new GameController(
                 hangman,
                 new ConsoleView(hangman, "\t"),
                 inputView,
                 mc,
                 LetterValidatorFactory.get(language),
-                new SecretWord(Dictionary.get(language), "_", "*"));
+                new SecretWord(word, "_", "*"));
         gameController.run();
     }
 

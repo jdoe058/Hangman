@@ -53,4 +53,5 @@ public interface MessageCenter {
     String enumValueMessage(Theme theme);
 
     String enterSomethingToContinue();
+    String dictionaryNotFoundMessage(Theme theme, Language language);
 }

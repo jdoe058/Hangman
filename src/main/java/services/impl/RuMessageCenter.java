@@ -35,6 +35,8 @@ public class RuMessageCenter implements MessageCenter {
     public static final String THEME_GENERAL = "Общая";
     public static final String THEME_RANDOM = "Случайная";
     public static final String PLEASE_ENTER_SOMETHING_TO_CONTINUE = "Введите что нибудь для продолжения... ";
+    public static final String DICTIONARY_NOT_FOUND =
+            "Словарь темы '%s' для языка '%s' не найден. " + PLEASE_ENTER_SOMETHING_TO_CONTINUE;
 
     @Override
     public String maskMessage(String word) {
@@ -166,4 +168,9 @@ public class RuMessageCenter implements MessageCenter {
         return PLEASE_ENTER_SOMETHING_TO_CONTINUE;
     }
 
+    @Override
+    public String dictionaryNotFoundMessage(Theme theme, Language language) {
+        return DICTIONARY_NOT_FOUND
+                .formatted(enumValueMessage(theme), enumValueMessage(language));
+    }
 }

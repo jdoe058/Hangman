@@ -35,6 +35,8 @@ public class EnMessageCenter implements MessageCenter {
     public static final String THEME_GENERAL = "General";
     public static final String THEME_RANDOM = "Random";
     public static final String PLEASE_ENTER_SOMETHING_TO_CONTINUE = "Please enter something to continue...";
+    public static final String DICTIONARY_NOT_FOUND =
+            "Dictionary theme '%s' for language '%s' not found. " + PLEASE_ENTER_SOMETHING_TO_CONTINUE;
 
     @Override
     public String maskMessage(String word) {
@@ -164,6 +166,11 @@ public class EnMessageCenter implements MessageCenter {
     @Override
     public String enterSomethingToContinue() {
         return PLEASE_ENTER_SOMETHING_TO_CONTINUE;
+    }
+
+    @Override
+    public String dictionaryNotFoundMessage(Theme theme, Language language) {
+        return DICTIONARY_NOT_FOUND.formatted(enumValueMessage(theme), enumValueMessage(language));
     }
 }
 
